@@ -176,7 +176,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     philosophy: {
-      sectionTag: "01 / STUDIO PHILOSOPHY",
+      sectionTag: "STUDIO PHILOSOPHY",
       title: "Storytelling, Cultural Expression, and Technological Exploration",
       quoteIndonesian: "“Membangun dan berkontribusi dalam komunitas game developer di Indonesia, serta memperkenalkan budaya Indonesia ke mancanegara.”",
       quoteTranslation: "“Building and contributing to Indonesia's game development ecosystem, while introducing Indonesian culture to wider audiences across the globe.”",
@@ -197,7 +197,7 @@ export const translations: Record<Language, Translations> = {
       ]
     },
     featuredProject: {
-      sectionTag: "02 / SELECTED WORK",
+      sectionTag: "SELECTED WORK",
       title: "Flagship Interactive Production",
       flagshipBadge: "FLAGSHIP PROJECT",
       horrorClarificationBadge: "BRAND POSITIONING NOTE",
@@ -214,7 +214,7 @@ export const translations: Record<Language, Translations> = {
       upcomingDesc: "Building on our interactive pipeline, Merantaw is actively researching and prototyping our next standalone production."
     },
     capabilities: {
-      sectionTag: "03 / CAPABILITIES & SERVICES",
+      sectionTag: "CAPABILITIES & SERVICES",
       title: "Multidisciplinary Engineering & Production",
       subtitle: "From low-level programming to atmospheric 3D world-building, Merantaw operates across eight specialized domains.",
       items: {
@@ -253,7 +253,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     milestones: {
-      sectionTag: "04 / MILESTONES & VALIDATION",
+      sectionTag: "MILESTONES & VALIDATION",
       title: "Track Record & Institutional Recognition",
       subtitle: "Merantaw is backed by competitive incubation programs, institutional grants, and legal foundations.",
       institutionalTag: "Institutional Affiliations",
@@ -292,7 +292,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     team: {
-      sectionTag: "05 / THE STUDIO",
+      sectionTag: "THE STUDIO",
       title: "Agile, Multidisciplinary Studio",
       subtitle: "Founded in 2024 by Farrel Apriandry, Merantaw combines a dedicated core unit with an adaptable network of creative engineers.",
       coreTitle: "3 Active Core Members",
@@ -303,7 +303,7 @@ export const translations: Record<Language, Translations> = {
       founderNote: "Founded by Farrel Apriandry in Magelang, Central Java."
     },
     contact: {
-      sectionTag: "06 / INQUIRIES & CONTACT",
+      sectionTag: "INQUIRIES & CONTACT",
       title: "Let's Build Something Meaningful",
       subtitle: "Open to strategic collaborations, publishing dialogues, and investment conversations.",
       investorAudienceBadge: "FOR INVESTORS & PARTNERS",
@@ -360,7 +360,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     philosophy: {
-      sectionTag: "01 / FILOSOFI STUDIO",
+      sectionTag: "FILOSOFI STUDIO",
       title: "Penceritaan, Ekspresi Budaya, dan Eksplorasi Teknologi",
       quoteIndonesian: "“Membangun dan berkontribusi dalam komunitas game developer di Indonesia, serta memperkenalkan budaya Indonesia ke mancanegara.”",
       quoteTranslation: "Falsafah Inti Merantaw — Farrel Apriandry (Founder)",
@@ -381,7 +381,7 @@ export const translations: Record<Language, Translations> = {
       ]
     },
     featuredProject: {
-      sectionTag: "02 / KARYA UNGGULAN",
+      sectionTag: "KARYA UNGGULAN",
       title: "Produksi Interaktif Unggulan",
       flagshipBadge: "PROYEK UTAMA",
       horrorClarificationBadge: "CATATAN POSISI BRAND",
@@ -398,7 +398,7 @@ export const translations: Record<Language, Translations> = {
       upcomingDesc: "Memanfaatkan alur produksi interaktif kami, Merantaw saat ini aktif meneliti dan membuat prototipe untuk judul orisinal berikutnya."
     },
     capabilities: {
-      sectionTag: "03 / KAPABILITAS & LAYANAN",
+      sectionTag: "KAPABILITAS & LAYANAN",
       title: "Rekayasa & Produksi Multidisiplin",
       subtitle: "Dari pemrograman tingkat rendah hingga pembangunan dunia 3D atmosferik, Merantaw beroperasi di delapan domain keahlian.",
       items: {
@@ -437,7 +437,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     milestones: {
-      sectionTag: "04 / PENCAPAIAN & VALIDASI",
+      sectionTag: "PENCAPAIAN & VALIDASI",
       title: "Rekam Jejak & Pengakuan Institusi",
       subtitle: "Merantaw didukung oleh program pembinaan wirausaha kompetitif, pendanaan hibah, dan fondasi legalitas resmi.",
       institutionalTag: "Kemitraan Institusi",
@@ -476,7 +476,7 @@ export const translations: Record<Language, Translations> = {
       }
     },
     team: {
-      sectionTag: "05 / TENTANG STUDIO",
+      sectionTag: "TENTANG STUDIO",
       title: "Studio Lincah & Multidisiplin",
       subtitle: "Didirikan pada 2024 oleh Farrel Apriandry di Magelang, Merantaw menggabungkan inti tim yang lincah dengan jejaring kolaborator berpengalaman.",
       coreTitle: "3 Anggota Tim Aktif",
@@ -487,7 +487,7 @@ export const translations: Record<Language, Translations> = {
       founderNote: "Didirikan oleh Farrel Apriandry di Magelang, Jawa Tengah."
     },
     contact: {
-      sectionTag: "06 / KONTAK & KOLABORASI",
+      sectionTag: "KONTAK & KOLABORASI",
       title: "Mari Bangun Karya Bersama",
       subtitle: "Terbuka untuk kolaborasi strategis, kemitraan penerbitan (publishing), dan diskusi investasi.",
       investorAudienceBadge: "UNTUK INVESTOR & MITRA",
