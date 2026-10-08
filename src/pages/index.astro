@@ -1,11 +1,11 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { CompanyProfileApp } from '../components/CompanyProfileApp';
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+	title="Merantaw — Game & Interactive Studio | Magelang, Indonesia"
+	description="Independent game and interactive studio based in Magelang, Indonesia. Building games, 3D interactive experiences, and technology from Indonesia."
+>
+	<CompanyProfileApp client:load />
 </Layout>

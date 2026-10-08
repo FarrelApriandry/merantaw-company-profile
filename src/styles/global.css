@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-navy: #192C56;
+  --color-brand-navy-dark: #0D172E;
+  --color-brand-navy-light: #233C70;
+  --color-brand-navy-subtle: #EEF2F9;
+  --color-brand-sand: #FAF9F6;
+  --color-brand-sand-dark: #F3F0E8;
+  --color-brand-accent: #2B4C7E;
+  --color-brand-gold: #C5A880;
+
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Newsreader", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-brand-sand);
+  color: #0F172A;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background-color: #192C56;
+  color: #FAF9F6;
+}
+
+/* Custom editorial scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F1EFEA;
+}
+::-webkit-scrollbar-thumb {
+  background: #BAC7D5;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #192C56;
+}
+
+/* Subtle grid texture */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(25, 44, 86, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(25, 44, 86, 0.035) 1px, transparent 1px);
+}
+
+.bg-grid-pattern-dark {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}

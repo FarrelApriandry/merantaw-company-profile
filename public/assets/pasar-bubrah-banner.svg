@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a1120"/>
+      <stop offset="40%" stop-color="#14213d"/>
+      <stop offset="75%" stop-color="#192C56"/>
+      <stop offset="100%" stop-color="#0d1829"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#3a5a9b" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#192C56" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mist" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#0a1120" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#192C56" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#192C56" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+
+  <!-- Mountain Silhouette (Mt. Merapi / Pasar Bubrah ridge) -->
+  <path d="M0 550 L250 360 L450 430 L650 240 L850 410 L1050 320 L1200 480 L1200 675 L0 675 Z" fill="#080e1a" opacity="0.85"/>
+  <path d="M0 580 L350 420 L580 480 L720 370 L950 490 L1200 430 L1200 675 L0 675 Z" fill="#050912" opacity="0.95"/>
+
+  <!-- Ancient Temple / Candi Silhouette cues -->
+  <g transform="translate(560, 290)" fill="#0d1829" opacity="0.8">
+    <rect x="25" y="50" width="30" height="60"/>
+    <polygon points="40,10 20,50 60,50"/>
+    <polygon points="40,25 28,50 52,50" fill="#14213d"/>
+  </g>
+
+  <!-- Atmospheric Mist Layers -->
+  <rect y="400" width="1200" height="275" fill="url(#mist)"/>
+
+  <!-- Stylized Technical Grid Lines -->
+  <g stroke="#ffffff" stroke-opacity="0.06" stroke-width="1">
+    <line x1="0" y1="150" x2="1200" y2="150"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="450" x2="1200" y2="450"/>
+    <line x1="300" y1="0" x2="300" y2="675"/>
+    <line x1="600" y1="0" x2="600" y2="675"/>
+    <line x1="900" y1="0" x2="900" y2="675"/>
+  </g>
+
+  <!-- Content Info Overlay -->
+  <g transform="translate(80, 480)">
+    <!-- Tag -->
+    <rect x="0" y="0" width="220" height="28" rx="6" fill="#FAF9F6" fill-opacity="0.12" stroke="#FAF9F6" stroke-opacity="0.25"/>
+    <text x="12" y="18" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="11" font-weight="700" letter-spacing="1.5" fill="#E2E8F0">FLAGSHIP INTERACTIVE WORK</text>
+
+    <!-- Title -->
+    <text x="0" y="65" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="38" font-weight="800" letter-spacing="2" fill="#FFFFFF">NUSANTARA: PASAR BUBRAH</text>
+
+    <!-- Subtitle -->
+    <text x="0" y="96" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="16" font-weight="400" fill="#94A3B8">Atmospheric Interactive Experience · Folklore &amp; Contemporary Storytelling · Demo on itch.io</text>
+
+    <!-- Badge info -->
+    <text x="0" y="130" font-family="'JetBrains Mono', monospace" font-size="12" fill="#64748B">[PLACEHOLDER ASSET — Replace at /public/assets/pasar-bubrah-banner.svg or .png]</text>
+  </g>
+</svg>

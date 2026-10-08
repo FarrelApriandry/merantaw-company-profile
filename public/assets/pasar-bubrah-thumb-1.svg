@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#192C56"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#g1)"/>
+  <circle cx="300" cy="180" r="80" fill="#243c72" opacity="0.4"/>
+  <path d="M120 320 L240 220 L360 280 L480 190 L600 320 L600 400 L0 400 Z" fill="#090d16" opacity="0.8"/>
+  <text x="300" y="185" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#E2E8F0">ATMOSPHERIC ENVIRONMENT</text>
+  <text x="300" y="215" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#64748B">[Placeholder: /public/assets/pasar-bubrah-thumb-1.svg]</text>
+</svg>
