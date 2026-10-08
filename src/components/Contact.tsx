@@ -23,7 +23,6 @@ export const Contact: React.FC = () => {
     subject: '',
     message: ''
   });
-  const [submitted, setSubmitted] = useState(false);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(studioInfo.officialEmail);
@@ -40,11 +39,10 @@ export const Contact: React.FC = () => {
       `From: ${formData.name} (${formData.email})\n\n${formData.message}`
     )}`;
     window.location.href = mailtoUrl;
-    setSubmitted(true);
   };
 
   return (
-    <section id="contact" className="py-24 sm:py-32 bg-white border-b border-slate-200/80">
+    <section id="contact" className="scroll-mt-20 py-24 sm:py-32 bg-white border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
@@ -108,7 +106,7 @@ export const Contact: React.FC = () => {
           <div className="lg:col-span-5 space-y-6">
             {/* Email Card */}
             <div className="p-6 rounded-2xl bg-[#FAF9F6] border border-slate-200">
-              <span className="text-xs font-mono font-bold text-slate-400 uppercase block mb-1">
+              <span className="text-xs font-mono font-bold text-slate-500 uppercase block mb-1">
                 {t.contact.emailLabel}
               </span>
               <div className="flex items-center justify-between gap-2 mt-2">
@@ -138,7 +136,7 @@ export const Contact: React.FC = () => {
 
             {/* Headquarters Card */}
             <div className="p-6 rounded-2xl bg-[#FAF9F6] border border-slate-200">
-              <span className="text-xs font-mono font-bold text-slate-400 uppercase block mb-1">
+              <span className="text-xs font-mono font-bold text-slate-500 uppercase block mb-1">
                 {t.contact.locationLabel}
               </span>
               <div className="flex items-center gap-3 mt-2 text-[#0F172A] font-medium text-sm">
@@ -149,7 +147,7 @@ export const Contact: React.FC = () => {
 
             {/* Official Channels List */}
             <div className="p-6 rounded-2xl bg-[#FAF9F6] border border-slate-200">
-              <span className="text-xs font-mono font-bold text-slate-400 uppercase block mb-3">
+              <span className="text-xs font-mono font-bold text-slate-500 uppercase block mb-3">
                 {t.contact.officialChannelsLabel}
               </span>
               <div className="flex flex-wrap gap-2 text-xs">
@@ -171,10 +169,10 @@ export const Contact: React.FC = () => {
                   <span>GitHub</span>
                   <ExternalLink size={12} />
                 </a>
-                <span className="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-400 font-mono text-[11px]">
+                <span className="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-500 font-mono text-[11px]">
                   Discord (Verified on request)
                 </span>
-                <span className="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-400 font-mono text-[11px]">
+                <span className="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-500 font-mono text-[11px]">
                   Instagram (@merantaw)
                 </span>
               </div>

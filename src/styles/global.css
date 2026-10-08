@@ -54,10 +54,3 @@ html {
     linear-gradient(to right, rgba(25, 44, 86, 0.035) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(25, 44, 86, 0.035) 1px, transparent 1px);
 }
-
-.bg-grid-pattern-dark {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-}

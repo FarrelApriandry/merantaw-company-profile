@@ -7,7 +7,7 @@ export const StudioTeam: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="team" className="py-24 sm:py-32 bg-[#FAF9F6] border-b border-slate-200/80">
+    <section id="team" className="scroll-mt-20 py-24 sm:py-32 bg-[#FAF9F6] border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
@@ -78,7 +78,7 @@ export const StudioTeam: React.FC = () => {
         {/* Disciplines & Competencies Strip */}
         <div className="bg-white rounded-2xl border border-slate-200 p-8 sm:p-10 shadow-2xs">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-            <h4 className="text-sm font-bold tracking-wider uppercase text-slate-400 font-mono">
+            <h4 className="text-sm font-bold tracking-wider uppercase text-slate-500 font-mono">
               {t.team.disciplinesLabel}
             </h4>
             <span className="text-xs font-semibold text-slate-500">

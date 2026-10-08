@@ -8,7 +8,7 @@ export const Philosophy: React.FC = () => {
   const pillarIcons = [Compass, Lightbulb, Globe2];
 
   return (
-    <section id="philosophy" className="py-24 sm:py-32 bg-[#FAF9F6] border-b border-slate-200/80">
+    <section id="philosophy" className="scroll-mt-20 py-24 sm:py-32 bg-[#FAF9F6] border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-12">
@@ -28,7 +28,7 @@ export const Philosophy: React.FC = () => {
               <Quote size={24} />
             </div>
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                 Core Studio Manifesto
               </span>
               <p className="text-xs font-medium text-slate-500">
@@ -70,7 +70,7 @@ export const Philosophy: React.FC = () => {
                     {pillar.description}
                   </p>
                 </div>
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono font-bold text-slate-400">
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono font-bold text-slate-500">
                   <span>PILLAR 0{idx + 1}</span>
                   <span className="text-[#192C56]">MERANTAW</span>
                 </div>

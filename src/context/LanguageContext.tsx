@@ -4,7 +4,6 @@ import { translations, type Language, type Translations } from '../data/translat
 interface LanguageContextType {
   lang: Language;
   setLang: (lang: Language) => void;
-  toggleLang: () => void;
   t: Translations;
 }
 
@@ -12,10 +11,8 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [lang, setLangState] = useState<Language>('en');
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const saved = localStorage.getItem('merantaw_lang') as Language | null;
     if (saved === 'en' || saved === 'id') {
       setLangState(saved);
@@ -40,14 +37,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   };
 
-  const toggleLang = () => {
-    setLang(lang === 'en' ? 'id' : 'en');
-  };
-
   const currentTranslations = translations[lang];
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, toggleLang, t: currentTranslations }}>
+    <LanguageContext.Provider value={{ lang, setLang, t: currentTranslations }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -60,7 +53,6 @@ export const useLanguage = (): LanguageContextType => {
     return {
       lang: 'en',
       setLang: () => {},
-      toggleLang: () => {},
       t: translations.en
     };
   }

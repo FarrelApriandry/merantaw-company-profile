@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { flagshipProject, upcomingProject } from '../data/studioData';
+import { flagshipProject } from '../data/studioData';
 import { ExternalLink, Info, CheckCircle2, Gamepad2, Sparkles, Layers } from 'lucide-react';
 
 export const FeaturedProject: React.FC = () => {
@@ -8,7 +8,7 @@ export const FeaturedProject: React.FC = () => {
   const [activeImage, setActiveImage] = useState<string>(flagshipProject.bannerImage);
 
   return (
-    <section id="works" className="py-24 sm:py-32 bg-white border-b border-slate-200/80">
+    <section id="works" className="scroll-mt-20 py-24 sm:py-32 bg-white border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
@@ -127,7 +127,7 @@ export const FeaturedProject: React.FC = () => {
               {/* Right Column: Project Specifications Table */}
               <div className="bg-white p-6 rounded-2xl border border-slate-200/90 shadow-2xs flex flex-col justify-between">
                 <div>
-                  <h4 className="text-xs font-bold tracking-widest uppercase text-slate-400 font-mono mb-4">
+                  <h4 className="text-xs font-bold tracking-widest uppercase text-slate-500 font-mono mb-4">
                     Specifications
                   </h4>
                   <dl className="space-y-4 text-xs">

@@ -9,7 +9,6 @@ export interface ProjectData {
   bannerImage: string;
   thumbnails: string[];
   isFlagship: boolean;
-  isInDevelopment?: boolean;
 }
 
 export interface CapabilityData {
@@ -25,13 +24,6 @@ export interface MetricData {
   id: string;
 }
 
-export interface MilestoneData {
-  id: string;
-  year: string;
-  type: 'funding' | 'award' | 'expo' | 'compliance';
-  highlight?: string;
-}
-
 export const studioInfo = {
   name: "Merantaw",
   brandColor: "#192C56",
@@ -43,7 +35,7 @@ export const studioInfo = {
   domain: "merantaw.my.id",
   officialEmail: "contact@merantaw.my.id",
   channels: {
-    itch: "https://merantaw.itch.io",
+    itch: "https://merantawid.itch.io",
     github: "https://github.com/merantaw",
     discord: "#",
     instagram: "#",
@@ -69,26 +61,13 @@ export const flagshipProject: ProjectData = {
   type: "Atmospheric Interactive Game",
   status: "Demo Release",
   platform: "PC / itch.io",
-  distributionUrl: "https://merantaw.itch.io/nusantara-pasar-bubrah",
+  distributionUrl: "https://merantawid.itch.io/nusantara-pasar-bubrah",
   bannerImage: "/assets/pasar-bubrah-banner.svg",
   thumbnails: [
     "/assets/pasar-bubrah-thumb-1.svg",
     "/assets/pasar-bubrah-thumb-2.svg"
   ],
   isFlagship: true
-};
-
-export const upcomingProject: ProjectData = {
-  id: "upcoming-02",
-  title: "PROJECT 02 (IN DEVELOPMENT)",
-  year: "2026",
-  type: "Interactive Experience & Game R&D",
-  status: "In Development",
-  platform: "To Be Announced",
-  bannerImage: "/assets/project-upcoming.svg",
-  thumbnails: [],
-  isFlagship: false,
-  isInDevelopment: true
 };
 
 export const capabilitiesList: CapabilityData[] = [
@@ -110,41 +89,4 @@ export const teamDisciplines = [
   "3D Production & Art",
   "2D Art & Concept",
   "Music Production & Audio"
-];
-
-export const milestonesList: MilestoneData[] = [
-  {
-    id: "p2mw",
-    year: "2024",
-    type: "funding",
-    highlight: "Rp10.000.000"
-  },
-  {
-    id: "investor",
-    year: "2024 - 2025",
-    type: "funding",
-    highlight: "Rp5.000.000"
-  },
-  {
-    id: "uadFair",
-    year: "2025",
-    type: "award",
-    highlight: "3rd Place Winner"
-  },
-  {
-    id: "kmiExpo",
-    year: "2024",
-    type: "expo"
-  },
-  {
-    id: "gelarKarya",
-    year: "2024",
-    type: "expo"
-  },
-  {
-    id: "legalIp",
-    year: "2024 - Present",
-    type: "compliance",
-    highlight: "4 IP / HKI"
-  }
 ];

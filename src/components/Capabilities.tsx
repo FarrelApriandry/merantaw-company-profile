@@ -28,7 +28,7 @@ export const Capabilities: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="capabilities" className="py-24 sm:py-32 bg-[#FAF9F6] border-b border-slate-200/80">
+    <section id="capabilities" className="scroll-mt-20 py-24 sm:py-32 bg-[#FAF9F6] border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
@@ -60,7 +60,7 @@ export const Capabilities: React.FC = () => {
                 <div>
                   {/* Top Bar with Number & Icon */}
                   <div className="flex items-center justify-between mb-6">
-                    <span className="font-mono text-xs font-bold text-slate-400 group-hover:text-[#192C56] transition-colors">
+                    <span className="font-mono text-xs font-bold text-slate-500 group-hover:text-[#192C56] transition-colors">
                       {cap.number}
                     </span>
                     <div className="w-10 h-10 rounded-xl bg-[#FAF9F6] border border-slate-200 flex items-center justify-center text-[#192C56] group-hover:bg-[#192C56] group-hover:text-white transition-all duration-300 shadow-2xs">

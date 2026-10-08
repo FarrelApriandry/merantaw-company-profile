@@ -11,7 +11,7 @@ export const LanguageToggle: React.FC<{ className?: string }> = ({ className = '
       aria-label="Language selection"
       className={`inline-flex items-center gap-1.5 p-1 rounded-full border border-slate-200/80 bg-white/70 backdrop-blur-md shadow-xs ${className}`}
     >
-      <div className="pl-1.5 pr-0.5 text-slate-400">
+      <div className="pl-1.5 pr-0.5 text-slate-500">
         <Globe size={13} className="text-slate-500" />
       </div>
       <button

@@ -57,7 +57,7 @@ export const Hero: React.FC = () => {
 
         {/* Metrics & Track Record Strip */}
         <div className="mt-8 pt-8 border-t border-slate-200">
-          <p className="text-[11px] font-bold tracking-widest text-slate-400 uppercase mb-4">
+          <p className="text-[11px] font-bold tracking-widest text-slate-500 uppercase mb-4">
             Studio Key Facts &amp; Track Record
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">

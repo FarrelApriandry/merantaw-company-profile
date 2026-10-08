@@ -50,7 +50,6 @@ export interface Translations {
     platformLabel: string;
     yearLabel: string;
     itchCta: string;
-    learnMoreCta: string;
     upcomingTag: string;
     upcomingTitle: string;
     upcomingDesc: string;
@@ -208,7 +207,6 @@ export const translations: Record<Language, Translations> = {
       platformLabel: "Distribution",
       yearLabel: "Release Year",
       itchCta: "Play Demo on itch.io",
-      learnMoreCta: "View Project Specs",
       upcomingTag: "PIPELINE",
       upcomingTitle: "2nd Title Currently in R&D",
       upcomingDesc: "Building on our interactive pipeline, Merantaw is actively researching and prototyping our next standalone production."
@@ -392,7 +390,6 @@ export const translations: Record<Language, Translations> = {
       platformLabel: "Distribusi",
       yearLabel: "Tahun Rilis",
       itchCta: "Mainkan Demo di itch.io",
-      learnMoreCta: "Spesifikasi Proyek",
       upcomingTag: "PIPELINE PENGEMBANGAN",
       upcomingTitle: "Karya Kedua Sedang dalam Tahap R&D",
       upcomingDesc: "Memanfaatkan alur produksi interaktif kami, Merantaw saat ini aktif meneliti dan membuat prototipe untuk judul orisinal berikutnya."

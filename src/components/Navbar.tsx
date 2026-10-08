@@ -38,7 +38,7 @@ export const Navbar: React.FC = () => {
           {/* Brand Logo */}
           <a
             href="#"
-            className="flex items-center gap-3 group focus:outline-hidden"
+            className="flex items-center gap-3 group focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#192C56] focus-visible:ring-offset-2 rounded-xl"
             aria-label="Merantaw Home"
           >
             <img
@@ -88,7 +88,7 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-700 hover:text-[#192C56] rounded-lg focus:outline-hidden"
+              className="p-2 text-slate-700 hover:text-[#192C56] rounded-lg focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#192C56] focus-visible:ring-offset-2"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}

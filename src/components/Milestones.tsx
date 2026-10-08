@@ -6,7 +6,7 @@ export const Milestones: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="milestones" className="py-24 sm:py-32 bg-white border-b border-slate-200/80">
+    <section id="milestones" className="scroll-mt-20 py-24 sm:py-32 bg-white border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
@@ -51,7 +51,7 @@ export const Milestones: React.FC = () => {
           {/* P2MW Funding */}
           <div className="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-[#192C56]/40 transition-all">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-mono font-bold text-slate-400">2025 · GRANT</span>
+              <span className="text-xs font-mono font-bold text-slate-500">2025 · GRANT</span>
               <span className="px-2.5 py-1 text-xs font-bold bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">
                 Rp 10.000.000
               </span>
@@ -73,7 +73,7 @@ export const Milestones: React.FC = () => {
           {/* Private Investor Funding */}
           <div className="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-[#192C56]/40 transition-all">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-mono font-bold text-slate-400">2026 · ANGEL</span>
+              <span className="text-xs font-mono font-bold text-slate-500">2026 · ANGEL</span>
               <span className="px-2.5 py-1 text-xs font-bold bg-blue-50 text-[#192C56] rounded-full border border-blue-200">
                 Rp 5.000.000
               </span>
@@ -95,7 +95,7 @@ export const Milestones: React.FC = () => {
           {/* UAD Fair 2025 Award */}
           <div className="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-[#192C56]/40 transition-all">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-mono font-bold text-slate-400">2025 · COMPETITION</span>
+              <span className="text-xs font-mono font-bold text-slate-500">2025 · COMPETITION</span>
               <span className="px-2.5 py-1 text-xs font-bold bg-amber-50 text-amber-800 rounded-full border border-amber-200">
                 3rd Place Winner
               </span>
@@ -117,7 +117,7 @@ export const Milestones: React.FC = () => {
           {/* KMI Expo */}
           <div className="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-[#192C56]/40 transition-all">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-mono font-bold text-slate-400">2025 · SHOWCASE</span>
+              <span className="text-xs font-mono font-bold text-slate-500">2025 · SHOWCASE</span>
               <span className="px-2.5 py-1 text-xs font-semibold bg-slate-100 text-slate-700 rounded-full">
                 Exhibition
               </span>
@@ -139,7 +139,7 @@ export const Milestones: React.FC = () => {
           {/* Gelar Karya */}
           <div className="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-[#192C56]/40 transition-all">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-mono font-bold text-slate-400">2025 · INNOVATION</span>
+              <span className="text-xs font-mono font-bold text-slate-500">2025 · INNOVATION</span>
               <span className="px-2.5 py-1 text-xs font-semibold bg-slate-100 text-slate-700 rounded-full">
                 University Level
               </span>
@@ -161,7 +161,7 @@ export const Milestones: React.FC = () => {
           {/* Legal Compliance & 4 IP */}
           <div className="bg-white p-7 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-[#192C56]/40 transition-all">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-mono font-bold text-slate-400">COMPLIANCE</span>
+              <span className="text-xs font-mono font-bold text-slate-500">COMPLIANCE</span>
               <span className="px-2.5 py-1 text-xs font-bold bg-[#192C56]/10 text-[#192C56] rounded-full border border-[#192C56]/20">
                 4 Registered IPs
               </span>

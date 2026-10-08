@@ -86,7 +86,7 @@ export const Footer: React.FC = () => {
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors font-mono"
               >
-                itch.io/merantaw
+                merantawid.itch.io
               </a>
               <a
                 href={studioInfo.channels.github}
