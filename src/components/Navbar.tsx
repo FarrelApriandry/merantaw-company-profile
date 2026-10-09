@@ -25,12 +25,16 @@ export const Navbar: React.FC = () => {
     { href: '#contact', label: t.nav.contact }
   ];
 
+  // Hero is now dark cinematic; top nav must be light-on-dark until scrolled.
+  const solidHeader = isScrolled || mobileMenuOpen;
+  const overDark = !solidHeader;
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+        solidHeader
           ? 'bg-[#FAF9F6]/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs py-3'
-          : 'bg-transparent py-5'
+          : 'bg-gradient-to-b from-black/70 to-transparent py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,7 +42,7 @@ export const Navbar: React.FC = () => {
           {/* Brand Logo */}
           <a
             href="#"
-            className="flex items-center gap-3 group focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#192C56] focus-visible:ring-offset-2 rounded-xl"
+            className="flex items-center gap-3 group focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-xl"
             aria-label="Merantaw Home"
           >
             <img
@@ -47,25 +51,43 @@ export const Navbar: React.FC = () => {
               className="w-9 h-9 rounded-xl shadow-xs transition-transform duration-200 group-hover:scale-105"
             />
             <div className="flex flex-col">
-              <span className="font-extrabold tracking-widest text-lg text-[#192C56] leading-tight">
+              <span
+                className={`font-extrabold tracking-widest text-lg leading-tight transition-colors ${
+                  overDark ? 'text-white' : 'text-[#192C56]'
+                }`}
+              >
                 MERANTAW
               </span>
-              <span className="text-[9px] font-semibold tracking-wider text-slate-500 uppercase">
+              <span
+                className={`text-[9px] font-semibold tracking-wider uppercase transition-colors ${
+                  overDark ? 'text-slate-300' : 'text-slate-500'
+                }`}
+              >
                 Game &amp; Interactive Studio
               </span>
             </div>
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-7 text-xs font-semibold tracking-wide uppercase text-slate-600">
+          <nav
+            className={`hidden md:flex items-center gap-7 text-xs font-semibold tracking-wide uppercase transition-colors ${
+              overDark ? 'text-slate-200' : 'text-slate-600'
+            }`}
+          >
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="transition-colors hover:text-[#192C56] py-1 relative group"
+                className={`transition-colors py-1 relative group ${
+                  overDark ? 'hover:text-white' : 'hover:text-[#192C56]'
+                }`}
               >
                 {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#192C56] transition-all duration-200 group-hover:w-full" />
+                <span
+                  className={`absolute bottom-0 left-0 w-0 h-0.5 transition-all duration-200 group-hover:w-full ${
+                    overDark ? 'bg-white' : 'bg-[#192C56]'
+                  }`}
+                />
               </a>
             ))}
           </nav>
@@ -75,7 +97,11 @@ export const Navbar: React.FC = () => {
             <LanguageToggle />
             <a
               href="#contact"
-              className="inline-flex items-center gap-1 px-4 py-2 text-xs font-bold tracking-wide text-white bg-[#192C56] hover:bg-[#233C70] rounded-full transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer"
+              className={`inline-flex items-center gap-1 px-4 py-2 text-xs font-bold tracking-wide rounded-full transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer ${
+                overDark
+                  ? 'text-black bg-white hover:bg-slate-200'
+                  : 'text-white bg-[#192C56] hover:bg-[#233C70]'
+              }`}
             >
               <span>{t.nav.inquireBtn}</span>
               <ArrowUpRight size={14} />
@@ -88,7 +114,11 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-700 hover:text-[#192C56] rounded-lg focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#192C56] focus-visible:ring-offset-2"
+              className={`p-2 rounded-lg focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-colors ${
+                overDark
+                  ? 'text-white hover:text-slate-200'
+                  : 'text-slate-700 hover:text-[#192C56]'
+              }`}
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
