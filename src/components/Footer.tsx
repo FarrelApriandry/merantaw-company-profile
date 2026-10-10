@@ -19,7 +19,7 @@ export const Footer: React.FC = () => {
           <div className="lg:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
               <img
-                src="/assets/merantaw-mark.svg"
+                src="/icon.svg"
                 alt="Merantaw Emblem"
                 className="w-10 h-10 rounded-xl"
               />

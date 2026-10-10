@@ -46,7 +46,7 @@ export const Navbar: React.FC = () => {
             aria-label="Merantaw Home"
           >
             <img
-              src="/assets/merantaw-mark.svg"
+              src="/icon.svg"
               alt="Merantaw Emblem"
               className="w-9 h-9 rounded-xl shadow-xs transition-transform duration-200 group-hover:scale-105"
             />
