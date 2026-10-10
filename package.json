@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@astrojs/react": "^7.0.1",
+    "@neon/config": "^1.8.6",
+    "@neon/env": "^1.5.3",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
