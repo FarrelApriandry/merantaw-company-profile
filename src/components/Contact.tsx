@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { studioInfo } from '../data/studioData';
+import { useSite } from '../lib/cms';
 import {
   Mail,
   MapPin,
@@ -14,9 +15,47 @@ import {
   Briefcase
 } from 'lucide-react';
 
+const ChannelsList: React.FC = () => {
+  const site = useSite();
+  const channels = site?.channels ?? [];
+  const social = channels.filter((c) => !["email", "domain", "location"].includes(c.key));
+  const fallback = [
+    { key: "itch", value: studioInfo.channels.itch, label: "itch.io", isLink: true },
+    { key: "github", value: studioInfo.channels.github, label: "GitHub", isLink: true },
+    { key: "discord", value: "Discord (Verified on request)", label: "Discord", isLink: false },
+    { key: "instagram", value: "Instagram (@merantaw)", label: "Instagram", isLink: false },
+  ];
+  const list = social.length ? social : fallback;
+  return (
+    <div className="flex flex-wrap gap-2 text-xs">
+      {list.map((c) =>
+        c.isLink ? (
+          <a
+            key={c.key}
+            href={c.value}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:border-[#192C56] text-slate-700 hover:text-[#192C56] font-semibold transition-all inline-flex items-center gap-1.5"
+          >
+            <span>{c.label}</span>
+            <ExternalLink size={12} />
+          </a>
+        ) : (
+          <span key={c.key} className="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-500 font-mono text-[11px]">
+            {c.value}
+          </span>
+        )
+      )}
+    </div>
+  );
+};
+
 export const Contact: React.FC = () => {
   const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [sendError, setSendError] = useState("");
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,15 +69,34 @@ export const Contact: React.FC = () => {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Generate mailto link with encoded subject and body for immediate direct outreach
-    const mailtoUrl = `mailto:${studioInfo.officialEmail}?subject=${encodeURIComponent(
-      `[Merantaw Inquiry] ${formData.subject}`
-    )}&body=${encodeURIComponent(
-      `From: ${formData.name} (${formData.email})\n\n${formData.message}`
-    )}`;
-    window.location.href = mailtoUrl;
+    setSending(true);
+    setSendError("");
+    try {
+      const res = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error ?? "Gagal mengirim pesan.");
+      }
+      setSent(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (err) {
+      // Fallback: mailto so the inquiry is never lost
+      const mailtoUrl = `mailto:${studioInfo.officialEmail}?subject=${encodeURIComponent(
+        `[Merantaw Inquiry] ${formData.subject}`
+      )}&body=${encodeURIComponent(
+        `From: ${formData.name} (${formData.email})\n\n${formData.message}`
+      )}`;
+      setSendError(err instanceof Error ? err.message : "Gagal mengirim.");
+      window.location.href = mailtoUrl;
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -150,32 +208,7 @@ export const Contact: React.FC = () => {
               <span className="text-xs font-mono font-bold text-slate-500 uppercase block mb-3">
                 {t.contact.officialChannelsLabel}
               </span>
-              <div className="flex flex-wrap gap-2 text-xs">
-                <a
-                  href={studioInfo.channels.itch}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:border-[#192C56] text-slate-700 hover:text-[#192C56] font-semibold transition-all inline-flex items-center gap-1.5"
-                >
-                  <span>itch.io</span>
-                  <ExternalLink size={12} />
-                </a>
-                <a
-                  href={studioInfo.channels.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 hover:border-[#192C56] text-slate-700 hover:text-[#192C56] font-semibold transition-all inline-flex items-center gap-1.5"
-                >
-                  <span>GitHub</span>
-                  <ExternalLink size={12} />
-                </a>
-                <span className="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-500 font-mono text-[11px]">
-                  Discord (Verified on request)
-                </span>
-                <span className="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-500 font-mono text-[11px]">
-                  Instagram (@merantaw)
-                </span>
-              </div>
+              <ChannelsList />
             </div>
           </div>
 
@@ -247,11 +280,22 @@ export const Contact: React.FC = () => {
 
               <button
                 type="submit"
-                className="w-full py-4 text-sm font-bold text-white bg-[#192C56] hover:bg-[#233C70] rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
+                disabled={sending}
+                className="w-full py-4 text-sm font-bold text-white bg-[#192C56] hover:bg-[#233C70] disabled:opacity-60 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
               >
-                <span>{t.contact.formSubmit}</span>
+                <span>{sending ? "…" : t.contact.formSubmit}</span>
                 <Send size={16} />
               </button>
+              {sent && (
+                <p className="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-xl">
+                  Pesan terkirim — kami akan merespons dalam 1–2 hari kerja.
+                </p>
+              )}
+              {sendError && (
+                <p className="text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-2 rounded-xl">
+                  {sendError} — membuka aplikasi email sebagai cadangan…
+                </p>
+              )}
             </form>
           </div>
         </div>

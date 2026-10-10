@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { requireAdmin } from "../../../lib/auth";
+import { env } from "../../../lib/env";
 
 export const prerender = false;
 
@@ -7,6 +8,6 @@ export const prerender = false;
 export const GET: APIRoute = async ({ request }) => {
   const denied = await requireAdmin(request);
   if (denied) return denied;
-  const endpoint = process.env.NEON_STORAGE_ENDPOINT ?? process.env.AWS_ENDPOINT_URL_S3 ?? "";
+  const endpoint = env("NEON_STORAGE_ENDPOINT") ?? env("AWS_ENDPOINT_URL_S3") ?? "";
   return Response.json({ endpoint: endpoint.replace(/\/$/, ""), bucket: "media" });
 };

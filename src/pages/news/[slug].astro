@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { NewsDetail } from '../../components/NewsDetail';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+---
+
+<Layout
+  title="News — Merantaw Studio"
+  description="News detail from Merantaw game studio."
+>
+  <NewsDetail client:load slug={slug ?? ""} />
+</Layout>

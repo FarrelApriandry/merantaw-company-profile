@@ -1,0 +1,13 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { NewsIndex } from '../../components/NewsIndex';
+
+export const prerender = false;
+---
+
+<Layout
+  title="News — Merantaw Studio"
+  description="Latest news and updates from Merantaw game studio."
+>
+  <NewsIndex client:load />
+</Layout>

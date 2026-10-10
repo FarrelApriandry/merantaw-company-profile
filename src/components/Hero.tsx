@@ -1,10 +1,38 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { metricsData } from '../data/studioData';
+import { useSite } from '../lib/cms';
 import { ArrowDown, Sparkles, MapPin, Layers } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   const { t } = useLanguage();
+  const site = useSite();
+
+  const metrics = metricsData.map((m) => {
+    const facts = site?.facts;
+    if (!facts) return m;
+    switch (m.id) {
+      case 'activeTeam':
+        return { ...m, value: facts.active_core?.value ?? m.value, suffix: '' };
+      case 'historicalNetwork':
+        return { ...m, value: facts.network_total?.value ?? m.value, suffix: '+' };
+      case 'yearsDev': {
+        const founded = parseInt(facts.founded_year?.value ?? '', 10);
+        const yrs = Number.isFinite(founded)
+          ? Math.max(1, new Date().getFullYear() - founded + 1)
+          : null;
+        return { ...m, value: yrs !== null ? String(yrs) : m.value, suffix: 'Yrs' };
+      }
+      case 'publishedWork':
+        return { ...m, value: facts.published_count?.value ?? m.value, suffix: '' };
+      case 'intellectualProperty':
+        return { ...m, value: facts.ip_count?.value ?? m.value, suffix: '' };
+      case 'institutionalPartners':
+        return { ...m, value: facts.partners_count?.value ?? m.value, suffix: '' };
+      default:
+        return m;
+    }
+  });
 
   return (
     <section className="relative pt-32 pb-0 overflow-hidden bg-black text-white">
@@ -70,7 +98,7 @@ export const Hero: React.FC = () => {
             Studio Key Facts &amp; Track Record
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
-            {metricsData.map((m) => {
+            {metrics.map((m) => {
               const labelKey = m.id as keyof typeof t.hero.metricsLabels;
               const label = t.hero.metricsLabels[labelKey] || m.id;
               return (

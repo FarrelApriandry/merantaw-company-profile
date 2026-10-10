@@ -9,7 +9,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "bun scripts/seed.ts",
+    "admin:hash": "bun -e \"import{hashPassword}from'./src/lib/auth.ts';console.log(hashPassword(process.argv[2]||'changeme'))\""
   },
   "dependencies": {
     "@astrojs/react": "^7.0.1",

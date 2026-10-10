@@ -4,7 +4,7 @@ import { LanguageToggle } from './LanguageToggle';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -21,6 +21,7 @@ export const Navbar: React.FC = () => {
     { href: '#works', label: t.nav.works },
     { href: '#capabilities', label: t.nav.capabilities },
     { href: '#milestones', label: t.nav.milestones },
+    { href: '/news', label: lang === 'id' ? 'Berita' : 'News' },
     { href: '#team', label: t.nav.team },
     { href: '#contact', label: t.nav.contact }
   ];

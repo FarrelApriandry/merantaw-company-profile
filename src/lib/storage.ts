@@ -1,5 +1,6 @@
 import { Files } from "files-sdk";
 import { neon } from "files-sdk/neon";
+import { env } from "./env";
 
 export const MEDIA_BUCKET = "media";
 
@@ -14,7 +15,7 @@ export function getFiles(): Files {
 
 /** Public read URL for an object key in the public_read bucket. */
 export function publicUrl(key: string): string {
-  const endpoint = process.env.AWS_ENDPOINT_URL_S3;
+  const endpoint = env("AWS_ENDPOINT_URL_S3");
   if (!endpoint) throw new Error("Missing AWS_ENDPOINT_URL_S3");
   return `${endpoint.replace(/\/$/, "")}/${MEDIA_BUCKET}/${key}`;
 }

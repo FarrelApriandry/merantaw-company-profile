@@ -1,10 +1,14 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { teamDisciplines } from '../data/studioData';
+import { useSite } from '../lib/cms';
 import { Users, UserCheck, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export const StudioTeam: React.FC = () => {
   const { t } = useLanguage();
+  const site = useSite();
+  const activeCore = site?.facts.active_core?.value ?? "3";
+  const networkTotal = site?.facts.network_total?.value ?? "10";
 
   return (
     <section id="team" className="scroll-mt-20 py-24 sm:py-32 bg-[#FAF9F6] border-b border-slate-200/80">
@@ -33,7 +37,7 @@ export const StudioTeam: React.FC = () => {
                   <UserCheck size={24} />
                 </div>
                 <span className="font-mono text-2xl sm:text-3xl font-extrabold text-[#192C56]">
-                  03
+                  {activeCore.padStart(2, "0")}
                 </span>
               </div>
               <h3 className="text-xl font-extrabold text-[#0F172A] mb-3">
@@ -58,7 +62,7 @@ export const StudioTeam: React.FC = () => {
                   <Users size={24} />
                 </div>
                 <span className="font-mono text-2xl sm:text-3xl font-extrabold text-slate-700">
-                  10
+                  {networkTotal}
                 </span>
               </div>
               <h3 className="text-xl font-extrabold text-[#0F172A] mb-3">

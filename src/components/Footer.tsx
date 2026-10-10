@@ -2,10 +2,17 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageToggle } from './LanguageToggle';
 import { studioInfo } from '../data/studioData';
+import { useSite } from '../lib/cms';
 import { ArrowUp } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const { t } = useLanguage();
+  const site = useSite();
+  const channels = site?.channels ?? [];
+  const itch = channels.find((c) => c.key === "itch")?.value ?? studioInfo.channels.itch;
+  const github = channels.find((c) => c.key === "github")?.value ?? studioInfo.channels.github;
+  const domain = channels.find((c) => c.key === "domain")?.value ?? studioInfo.domain;
+  const location = channels.find((c) => c.key === "location")?.value;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -81,26 +88,26 @@ export const Footer: React.FC = () => {
             </h4>
             <div className="flex flex-col gap-2 text-xs text-slate-300">
               <a
-                href={studioInfo.channels.itch}
+                href={itch}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors font-mono"
               >
-                merantawid.itch.io
+                {itch.replace(/^https?:\/\//, "")}
               </a>
               <a
-                href={studioInfo.channels.github}
+                href={github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors font-mono"
               >
-                github.com/merantaw
+                {github.replace(/^https?:\/\//, "")}
               </a>
               <span className="text-slate-400 font-mono">
-                Domain: {studioInfo.domain}
+                Domain: {domain}
               </span>
               <span className="text-slate-400">
-                Magelang, Central Java, Indonesia
+                {location ?? "Magelang, Central Java, Indonesia"}
               </span>
             </div>
 
