@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Plus, Trash2, Check, MailOpen } from "lucide-react";
-import { apiJson, Field, inputCls, SaveBar, useDirty } from "./ui";
+import { MailOpen, Check, Trash2, Reply, Search, Inbox as InboxIcon, Globe, Link2 } from "lucide-react";
+import {
+  apiJson, Field, inputCls, useDirty, useSavedTick,
+  PageHeader, TableWrap, StatusBadge, ConfirmDialog,
+  ErrorBanner, SaveButton, FormSection, EmptyState, SkeletonRows, formatDate,
+} from "./ui";
 
 /* ---------- Studio facts ---------- */
 
@@ -16,8 +20,13 @@ const FACT_LABELS: Record<string, string> = {
   network_total: "Total kolaborator (historis)",
   ip_count: "Jumlah HKI",
   partners_count: "Jumlah mitra program",
-  founded_year: "Tahun berdiri (untuk hitung tahun dev otomatis)",
-  published_count: "Karya terbit (auto dari DB)",
+  founded_year: "Tahun berdiri",
+  published_count: "Karya terbit",
+};
+
+const FACT_HINTS: Record<string, string> = {
+  founded_year: "Dipakai menghitung otomatis “tahun pengalaman” di homepage.",
+  published_count: "Mode Auto menghitung dari project berstatus published/flagship.",
 };
 
 export const FactsEditor: React.FC = () => {
@@ -25,6 +34,7 @@ export const FactsEditor: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [savedTick, flashSaved] = useSavedTick();
 
   useEffect(() => {
     apiJson<{ facts: Fact[] }>("/api/admin/site")
@@ -44,6 +54,7 @@ export const FactsEditor: React.FC = () => {
       for (const f of facts) payload[f.key] = { value: f.value, mode: f.mode };
       await apiJson("/api/admin/site", { method: "POST", body: JSON.stringify({ facts: payload }) });
       markSaved();
+      flashSaved();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Gagal menyimpan.");
     } finally {
@@ -51,39 +62,58 @@ export const FactsEditor: React.FC = () => {
     }
   };
 
-  if (!loaded) return <p className="text-sm text-slate-500 py-8 text-center">Memuat…</p>;
+  if (!loaded) return <SkeletonRows rows={4} />;
 
   return (
     <div>
-      {error && <p className="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-3 py-2 rounded-xl mb-4">{error}</p>}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 space-y-4">
-        {facts.map((f) => (
-          <div key={f.key} className="grid grid-cols-1 sm:grid-cols-[1fr_140px_120px] gap-3 items-end">
-            <Field label={`${FACT_LABELS[f.key] ?? f.key} (${f.key})`}>
-              <input
-                value={f.value}
-                disabled={f.mode === "auto"}
-                onChange={(e) => setFacts((all) => all.map((x) => (x.key === f.key ? { ...x, value: e.target.value } : x)))}
-                className={`${inputCls} ${f.mode === "auto" ? "opacity-60" : ""}`}
-              />
-            </Field>
-            <Field label="Mode">
-              <select
-                value={f.mode}
-                onChange={(e) => setFacts((all) => all.map((x) => (x.key === f.key ? { ...x, mode: e.target.value } : x)))}
-                className={inputCls}
-              >
-                <option value="manual">Manual</option>
-                <option value="auto">Auto</option>
-              </select>
-            </Field>
-            <p className="text-[11px] text-slate-500 pb-3">{f.note}</p>
-          </div>
-        ))}
-        <p className="text-[11px] text-slate-500">Mode “auto” hanya berlaku untuk karya terbit (dihitung dari project berstatus published/flagship).</p>
+      <ErrorBanner message={error} onDismiss={() => setError("")} />
+      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden mb-4">
+        <table className="w-full text-sm min-w-150">
+          <thead>
+            <tr className="bg-slate-50 border-b border-slate-200 text-left">
+              <th className="px-4 py-2.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Metrik</th>
+              <th className="px-4 py-2.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider w-36">Nilai</th>
+              <th className="px-4 py-2.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider w-32">Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            {facts.map((f) => (
+              <tr key={f.key} className="border-t border-slate-100 first:border-0 hover:bg-slate-50">
+                <td className="px-4 py-3">
+                  <span className="block text-xs font-bold text-[#0F172A]">{FACT_LABELS[f.key] ?? f.key}</span>
+                  <span className="block text-[11px] text-slate-500 font-mono mt-0.5">{f.key}</span>
+                  {FACT_HINTS[f.key] && <span className="block text-[11px] text-slate-500 mt-0.5">{FACT_HINTS[f.key]}</span>}
+                </td>
+                <td className="px-4 py-3">
+                  <input
+                    value={f.value}
+                    disabled={f.mode === "auto"}
+                    onChange={(e) => setFacts((all) => all.map((x) => (x.key === f.key ? { ...x, value: e.target.value } : x)))}
+                    className={`${inputCls} ${f.mode === "auto" ? "opacity-60" : ""} !py-2`}
+                    aria-label={`Nilai ${FACT_LABELS[f.key] ?? f.key}`}
+                  />
+                </td>
+                <td className="px-4 py-3">
+                  <select
+                    value={f.mode}
+                    onChange={(e) => setFacts((all) => all.map((x) => (x.key === f.key ? { ...x, mode: e.target.value } : x)))}
+                    className={`${inputCls} !py-2`}
+                    aria-label={`Mode ${FACT_LABELS[f.key] ?? f.key}`}
+                  >
+                    <option value="manual">Manual</option>
+                    <option value="auto">Auto</option>
+                  </select>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <div className="mt-4">
-        <SaveBar dirty={dirty} busy={busy} onSave={save} label="Simpan facts" />
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-[11px] text-slate-500">
+          {dirty ? "Ada perubahan belum disimpan." : "Angka ini tampil sebagai metrik di hero homepage."}
+        </span>
+        <SaveButton onClick={save} busy={busy} justSaved={savedTick} label="Simpan facts" />
       </div>
     </div>
   );
@@ -104,6 +134,7 @@ export const ChannelsEditor: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [savedTick, flashSaved] = useSavedTick();
 
   useEffect(() => {
     apiJson<{ channels: Channel[] }>("/api/admin/site")
@@ -121,6 +152,7 @@ export const ChannelsEditor: React.FC = () => {
     try {
       await apiJson("/api/admin/site", { method: "POST", body: JSON.stringify({ channels }) });
       markSaved();
+      flashSaved();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Gagal menyimpan.");
     } finally {
@@ -128,48 +160,104 @@ export const ChannelsEditor: React.FC = () => {
     }
   };
 
-  if (!loaded) return <p className="text-sm text-slate-500 py-8 text-center">Memuat…</p>;
+  if (!loaded) return <SkeletonRows rows={6} />;
 
   return (
     <div>
-      {error && <p className="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-3 py-2 rounded-xl mb-4">{error}</p>}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 space-y-4">
-        {channels.map((c) => (
-          <div key={c.key} className="grid grid-cols-1 sm:grid-cols-[130px_1fr_150px_90px_40px] gap-3 items-end">
-            <Field label="Key">
-              <input value={c.key} disabled className={`${inputCls} font-mono opacity-60`} />
-            </Field>
-            <Field label={`Nilai (${c.label})`}>
-              <input
-                value={c.value}
-                onChange={(e) => setChannels((all) => all.map((x) => (x.key === c.key ? { ...x, value: e.target.value } : x)))}
-                className={inputCls}
-                placeholder={c.isLink ? "https://…" : "teks"}
-              />
-            </Field>
-            <Field label="Label">
-              <input
-                value={c.label}
-                onChange={(e) => setChannels((all) => all.map((x) => (x.key === c.key ? { ...x, label: e.target.value } : x)))}
-                className={inputCls}
-              />
-            </Field>
-            <label className="flex items-center gap-2 text-xs font-bold text-slate-700 pb-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={c.isLink}
-                onChange={(e) => setChannels((all) => all.map((x) => (x.key === c.key ? { ...x, isLink: e.target.checked } : x)))}
-                className="w-4 h-4 accent-[#192C56]"
-              />
-              Link?
-            </label>
-            <span className="pb-3 font-mono text-[11px] text-slate-400">#{c.sortOrder}</span>
+      <ErrorBanner message={error} onDismiss={() => setError("")} />
+      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden mb-4">
+        <table className="w-full text-sm min-w-170">
+          <thead>
+            <tr className="bg-slate-50 border-b border-slate-200 text-left">
+              <th className="px-4 py-2.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider w-32">Key</th>
+              <th className="px-4 py-2.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Nilai</th>
+              <th className="px-4 py-2.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider w-40 hidden md:table-cell">Label</th>
+              <th className="px-4 py-2.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider w-20 text-center">Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            {channels.map((c) => (
+              <tr key={c.key} className="border-t border-slate-100 first:border-0 hover:bg-slate-50">
+                <td className="px-4 py-3 font-mono text-[11px] text-slate-600 whitespace-nowrap">{c.key}</td>
+                <td className="px-4 py-3 min-w-44">
+                  <span className="flex items-center gap-2">
+                    {c.isLink
+                      ? <Link2 size={13} className="text-slate-400 shrink-0" />
+                      : <Globe size={13} className="text-slate-400 shrink-0" />}
+                    <input
+                      value={c.value}
+                      onChange={(e) => setChannels((all) => all.map((x) => (x.key === c.key ? { ...x, value: e.target.value } : x)))}
+                      className={`${inputCls} !py-2`}
+                      placeholder={c.isLink ? "https://…" : "teks"}
+                      aria-label={`Nilai ${c.key}`}
+                    />
+                  </span>
+                </td>
+                <td className="px-4 py-3 hidden md:table-cell">
+                  <input
+                    value={c.label}
+                    onChange={(e) => setChannels((all) => all.map((x) => (x.key === c.key ? { ...x, label: e.target.value } : x)))}
+                    className={`${inputCls} !py-2`}
+                    aria-label={`Label ${c.key}`}
+                  />
+                </td>
+                <td className="px-4 py-3 text-center">
+                  <input
+                    type="checkbox"
+                    checked={c.isLink}
+                    onChange={(e) => setChannels((all) => all.map((x) => (x.key === c.key ? { ...x, isLink: e.target.checked } : x)))}
+                    className="w-4 h-4 accent-[#192C56]"
+                    aria-label={`${c.key} adalah link`}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-[11px] text-slate-500">
+          {dirty ? "Ada perubahan belum disimpan." : "Kontak & sosmed di footer dan halaman kontak."}
+        </span>
+        <SaveButton onClick={save} busy={busy} justSaved={savedTick} label="Simpan channels" />
+      </div>
+    </div>
+  );
+};
+
+/* ---------- Site tab shell ---------- */
+
+export const SitePanel: React.FC = () => {
+  const [section, setSection] = useState<"facts" | "channels">("facts");
+  return (
+    <div>
+      <PageHeader
+        breadcrumb="Dashboard / Pengaturan situs"
+        title="Pengaturan situs"
+        desc="Angka metrik homepage dan daftar kontak / media sosial."
+        actions={
+          <div className="inline-flex items-center gap-1 p-1 rounded-lg border border-slate-200 bg-white">
+            {(
+              [
+                { id: "facts", label: "Facts" },
+                { id: "channels", label: "Channels" },
+              ] as const
+            ).map((s) => (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => setSection(s.id)}
+                className={`px-3.5 py-1.5 text-xs font-bold rounded-md transition-all ${
+                  section === s.id ? "bg-[#192C56] text-white shadow-sm" : "text-slate-500 hover:text-[#192C56]"
+                }`}
+              >
+                {s.label}
+              </button>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="mt-4">
-        <SaveBar dirty={dirty} busy={busy} onSave={save} label="Simpan channels" />
-      </div>
+        }
+      />
+      {section === "facts" ? <FactsEditor /> : <ChannelsEditor />}
     </div>
   );
 };
@@ -191,7 +279,10 @@ export const InboxEditor: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState("");
   const [filter, setFilter] = useState<"all" | "unread">("all");
+  const [search, setSearch] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<Inquiry | null>(null);
+  const [busy, setBusy] = useState(false);
 
   const load = () =>
     apiJson<{ inquiries: Inquiry[] }>("/api/admin/inquiries")
@@ -215,94 +306,183 @@ export const InboxEditor: React.FC = () => {
     }
   };
 
-  const remove = async (id: string) => {
-    if (!window.confirm("Hapus pesan ini?")) return;
+  const confirmDelete = async () => {
+    if (!deleting) return;
+    setBusy(true);
     try {
-      await apiJson(`/api/admin/inquiries?id=${encodeURIComponent(id)}`, { method: "DELETE" });
-      setItems((all) => all.filter((x) => x.id !== id));
+      await apiJson(`/api/admin/inquiries?id=${encodeURIComponent(deleting.id)}`, { method: "DELETE" });
+      setItems((all) => all.filter((x) => x.id !== deleting.id));
+      setDeleting(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Gagal menghapus.");
+    } finally {
+      setBusy(false);
     }
   };
 
-  if (!loaded) return <p className="text-sm text-slate-500 py-8 text-center">Memuat inbox…</p>;
+  if (!loaded) {
+    return (
+      <div>
+        <PageHeader breadcrumb="Dashboard / Inbox" title="Inbox" desc="Pesan dari formulir kontak situs." />
+        <SkeletonRows rows={5} />
+      </div>
+    );
+  }
 
-  const shown = filter === "unread" ? items.filter((x) => !x.isRead) : items;
+  const q = search.trim().toLowerCase();
+  const shown = items.filter((m) => {
+    if (filter === "unread" && m.isRead) return false;
+    if (!q) return true;
+    return (
+      m.subject.toLowerCase().includes(q) ||
+      m.name.toLowerCase().includes(q) ||
+      m.email.toLowerCase().includes(q) ||
+      m.message.toLowerCase().includes(q)
+    );
+  });
   const unreadCount = items.filter((x) => !x.isRead).length;
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={() => setFilter("all")}
-          className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all ${filter === "all" ? "bg-[#192C56] text-white" : "bg-white text-slate-600 border border-slate-200"}`}
-        >
-          Semua ({items.length})
-        </button>
-        <button
-          type="button"
-          onClick={() => setFilter("unread")}
-          className={`px-3 py-1.5 text-xs font-bold rounded-full transition-all ${filter === "unread" ? "bg-[#192C56] text-white" : "bg-white text-slate-600 border border-slate-200"}`}
-        >
-          Belum dibaca ({unreadCount})
-        </button>
+    <div>
+      <PageHeader
+        breadcrumb="Dashboard / Inbox"
+        title="Inbox"
+        desc="Pesan dari formulir kontak — klik baris untuk membaca & membalas."
+        actions={
+          <div className="inline-flex items-center gap-1 p-1 rounded-lg border border-slate-200 bg-white">
+            {(
+              [
+                { id: "all", label: `Semua (${items.length})` },
+                { id: "unread", label: `Belum dibaca (${unreadCount})` },
+              ] as const
+            ).map((f) => (
+              <button
+                key={f.id}
+                type="button"
+                onClick={() => setFilter(f.id)}
+                className={`px-3.5 py-1.5 text-xs font-bold rounded-md transition-all whitespace-nowrap ${
+                  filter === f.id ? "bg-[#192C56] text-white shadow-sm" : "text-slate-500 hover:text-[#192C56]"
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        }
+      />
+      <ErrorBanner message={error} onDismiss={() => setError("")} />
+
+      <div className="bg-white rounded-2xl border border-slate-200 p-3 mb-4">
+        <div className="relative">
+          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Cari nama, email, subjek, atau isi pesan…"
+            className={`${inputCls} pl-9`}
+            aria-label="Cari pesan"
+          />
+        </div>
       </div>
 
-      {error && <p className="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-3 py-2 rounded-xl">{error}</p>}
+      {items.length === 0 ? (
+        <EmptyState
+          icon={<InboxIcon size={22} />}
+          title="Inbox kosong"
+          desc="Belum ada pesan dari formulir kontak. Pesan baru otomatis masuk ke sini dan menaikkan badge di sidebar."
+        />
+      ) : shown.length === 0 ? (
+        <EmptyState icon={<InboxIcon size={22} />} title="Tidak ada hasil" desc="Coba kata kunci lain atau ubah filter." />
+      ) : (
+        <TableWrap>
+          <table className="w-full text-sm min-w-160">
+            <thead>
+              <tr className="bg-slate-50 border-b border-slate-200 text-left">
+                <th className="px-4 py-2.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Pesan</th>
+                <th className="px-4 py-2.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider hidden md:table-cell">Tanggal</th>
+                <th className="px-4 py-2.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {shown.map((m) => {
+                const open = openId === m.id;
+                return (
+                  <React.Fragment key={m.id}>
+                    <tr
+                      onClick={() => {
+                        setOpenId(open ? null : m.id);
+                        if (!open && !m.isRead) mark(m.id, true);
+                      }}
+                      className={`border-t border-slate-100 first:border-0 hover:bg-slate-50 cursor-pointer transition-colors ${
+                        !m.isRead ? "bg-blue-50/40" : ""
+                      }`}
+                    >
+                      <td className="px-4 py-3 min-w-0">
+                        <span className="flex items-center gap-2.5">
+                          {!m.isRead && <span className="w-2 h-2 rounded-full bg-[#192C56] shrink-0" aria-label="Belum dibaca" />}
+                          <span className="min-w-0">
+                            <span className={`block text-sm truncate ${m.isRead ? "font-semibold text-slate-700" : "font-bold text-[#0F172A]"}`}>
+                              {m.subject || "(tanpa subjek)"}
+                            </span>
+                            <span className="block text-[11px] text-slate-500 truncate">
+                              {m.name} · {m.email}
+                            </span>
+                          </span>
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-xs text-slate-500 hidden md:table-cell whitespace-nowrap">{formatDate(m.createdAt)}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <StatusBadge status={m.isRead ? "Dibaca" : "Baru"} />
+                      </td>
+                    </tr>
+                    {open && (
+                      <tr className="bg-slate-50/60">
+                        <td colSpan={3} className="px-4 sm:px-6 py-4">
+                          <FormSection title="Isi pesan" desc={`${m.name} <${m.email}> · ${formatDate(m.createdAt)}`}>
+                            <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap bg-white border border-slate-200 rounded-lg p-3.5">{m.message}</p>
+                          </FormSection>
+                          <div className="flex flex-wrap items-center gap-2 mt-3">
+                            <a
+                              href={`mailto:${m.email}?subject=${encodeURIComponent(`Re: ${m.subject}`)}`}
+                              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-white bg-[#192C56] hover:bg-[#233C70] rounded-lg transition-all"
+                            >
+                              <Reply size={13} /> Balas via email
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => mark(m.id, !m.isRead)}
+                              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-slate-700 hover:bg-slate-200 rounded-lg transition-all"
+                            >
+                              {m.isRead ? <MailOpen size={13} /> : <Check size={13} />}
+                              {m.isRead ? "Tandai belum dibaca" : "Tandai dibaca"}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setDeleting(m)}
+                              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-red-700 hover:bg-red-50 rounded-lg transition-all"
+                            >
+                              <Trash2 size={13} /> Hapus
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+            </tbody>
+          </table>
+        </TableWrap>
+      )}
 
-      {shown.map((m) => {
-        const open = openId === m.id;
-        return (
-          <div key={m.id} className={`bg-white rounded-2xl border overflow-hidden ${m.isRead ? "border-slate-200" : "border-[#192C56]/40 shadow-sm"}`}>
-            <button
-              type="button"
-              onClick={() => {
-                setOpenId(open ? null : m.id);
-                if (!open && !m.isRead) mark(m.id, true);
-              }}
-              className="w-full flex items-center gap-3 px-5 py-4 text-left hover:bg-slate-50 transition-colors"
-            >
-              {!m.isRead && <span className="w-2 h-2 rounded-full bg-[#192C56] shrink-0" />}
-              <span className="flex-1 min-w-0">
-                <span className="block text-sm font-bold text-[#0F172A] truncate">{m.subject}</span>
-                <span className="block text-xs text-slate-500 truncate">
-                  {m.name} · {m.email} · {new Date(m.createdAt).toLocaleString("id-ID")}
-                </span>
-              </span>
-            </button>
-            {open && (
-              <div className="px-5 pb-5 pt-1 border-t border-slate-100">
-                <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap mb-4">{m.message}</p>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={`mailto:${m.email}?subject=${encodeURIComponent(`Re: ${m.subject}`)}`}
-                    className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-[#192C56] hover:bg-[#233C70] rounded-xl transition-all"
-                  >
-                    Balas via email
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => mark(m.id, !m.isRead)}
-                    className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 rounded-xl transition-all"
-                  >
-                    {m.isRead ? <MailOpen size={14} /> : <Check size={14} />}
-                    {m.isRead ? "Tandai belum dibaca" : "Tandai dibaca"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => remove(m.id)}
-                    className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-red-700 hover:bg-red-50 rounded-xl transition-all"
-                  >
-                    <Plus size={14} className="rotate-45" /> Hapus
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        );
-      })}
-      {shown.length === 0 && <p className="text-sm text-slate-500 py-8 text-center">Inbox kosong.</p>}
+      <ConfirmDialog
+        open={!!deleting}
+        title="Hapus pesan?"
+        message={`Pesan dari "${deleting?.name ?? ""}" akan dihapus permanen. Tindakan ini tidak bisa dibatalkan.`}
+        busy={busy}
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleting(null)}
+      />
     </div>
   );
 };

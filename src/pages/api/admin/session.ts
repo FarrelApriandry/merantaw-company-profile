@@ -48,21 +48,21 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const expected = expectedHash();
-  if (expected) {
-    if (!verifyPassword(body.password, expected)) {
-      return json({ error: "invalid credentials" }, 401);
-    }
-  } else {
-    // Bootstrap mode: compare against ADMIN_PASSWORD, then emit a one-time
-    // hash to the server log so it can be pinned as ADMIN_PASSWORD_HASH.
-    const plain = bootstrapPassword();
-    if (!plain || body.password !== plain) {
-      return json({ error: "invalid credentials" }, 401);
-    }
+  const plain = bootstrapPassword();
+  // Terima salah satu: hash (bila cocok) ATAU plaintext (bila cocok).
+  // Ini agar update ADMIN_PASSWORD di .env langsung bisa dipakai login
+  // walau ADMIN_PASSWORD_HASH lama masih terset.
+  let ok = false;
+  if (expected && body.password && verifyPassword(body.password, expected)) ok = true;
+  if (!ok && plain && body.password === plain) {
+    ok = true;
     console.warn(
       "[admin] BOOTSTRAP LOGIN — pin this hash as ADMIN_PASSWORD_HASH then remove ADMIN_PASSWORD:\n" +
         hashPassword(plain)
     );
+  }
+  if (!ok) {
+    return json({ error: "invalid credentials" }, 401);
   }
   const { token, expiresAt } = await createSession();
   return json({ ok: true }, 200, { "set-cookie": sessionCookie(token, expiresAt) });
