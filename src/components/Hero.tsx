@@ -77,14 +77,14 @@ export const Hero: React.FC = () => {
           {/* Action CTAs */}
           <div className="flex flex-wrap items-center gap-4 mb-16">
             <a
-              href="#works"
+              href="/#works"
               className="px-6 py-3.5 text-sm font-bold tracking-wide text-black bg-white hover:bg-slate-200 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer inline-flex items-center gap-2"
             >
               <span>{t.hero.primaryCta}</span>
               <Layers size={16} />
             </a>
             <a
-              href="#capabilities"
+              href="/#capabilities"
               className="px-6 py-3.5 text-sm font-bold tracking-wide text-white bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl shadow-xs backdrop-blur-md transition-all duration-200 cursor-pointer"
             >
               {t.hero.secondaryCta}

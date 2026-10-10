@@ -17,13 +17,13 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { href: '#philosophy', label: t.nav.about },
-    { href: '#works', label: t.nav.works },
-    { href: '#capabilities', label: t.nav.capabilities },
-    { href: '#milestones', label: t.nav.milestones },
-    { href: '/news', label: lang === 'id' ? 'Berita' : 'News' },
-    { href: '#team', label: t.nav.team },
-    { href: '#contact', label: t.nav.contact }
+    { href: '/#philosophy', label: t.nav.about },
+    { href: '/#works', label: t.nav.works },
+    { href: '/#capabilities', label: t.nav.capabilities },
+    { href: '/#milestones', label: t.nav.milestones },
+    { href: '/#news', label: lang === 'id' ? 'Berita' : 'News' },
+    { href: '/#team', label: t.nav.team },
+    { href: '/#contact', label: t.nav.contact }
   ];
 
   // Hero is now dark cinematic; top nav must be light-on-dark until scrolled.
@@ -42,7 +42,7 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between">
           {/* Brand Logo */}
           <a
-            href="#"
+            href="/"
             className="flex items-center gap-3 group focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-xl"
             aria-label="Merantaw Home"
           >
@@ -97,7 +97,7 @@ export const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center gap-4">
             <LanguageToggle />
             <a
-              href="#contact"
+              href="/#contact"
               className={`inline-flex items-center gap-1 px-4 py-2 text-xs font-bold tracking-wide rounded-full transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer ${
                 overDark
                   ? 'text-black bg-white hover:bg-slate-200'
@@ -144,7 +144,7 @@ export const Navbar: React.FC = () => {
             ))}
             <div className="pt-2">
               <a
-                href="#contact"
+                href="/#contact"
                 onClick={() => setMobileMenuOpen(false)}
                 className="inline-flex items-center justify-center gap-1.5 w-full py-3 text-xs font-bold uppercase tracking-wider text-white bg-[#192C56] rounded-xl"
               >

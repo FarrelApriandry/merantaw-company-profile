@@ -151,7 +151,7 @@ export const FeaturedProject: React.FC = () => {
                     </a>
                   )}
                   <a
-                    href="#contact"
+                    href="/#contact"
                     className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl transition-all cursor-pointer"
                   >
                     <span>{t.nav.inquireBtn}</span>
