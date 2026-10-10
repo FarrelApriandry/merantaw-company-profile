@@ -1,0 +1,10 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { AdminLogin } from "../../components/admin/AdminLogin";
+
+export const prerender = false;
+---
+
+<AdminLayout title="Admin Login — Merantaw">
+  <AdminLogin client:load />
+</AdminLayout>

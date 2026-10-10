@@ -1,0 +1,10 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { AdminDashboard } from "../../components/admin/AdminDashboard";
+
+export const prerender = false;
+---
+
+<AdminLayout title="Dashboard — Merantaw Admin" fullBleed>
+  <AdminDashboard client:load />
+</AdminLayout>
