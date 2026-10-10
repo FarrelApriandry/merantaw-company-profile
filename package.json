@@ -28,6 +28,8 @@
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "astro": "^7.3.7",
     "drizzle-orm": "^0.45.4",
     "files-sdk": "^3.0.0",

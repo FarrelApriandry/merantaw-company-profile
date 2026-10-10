@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   title?: string;
@@ -15,8 +17,10 @@ const { title = "Merantaw Admin" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
     <title>{title}</title>
+    <Analytics />
   </head>
   <body class="bg-[#F3F0E8] text-[#0F172A] min-h-screen">
     <slot />
+    <SpeedInsights />
   </body>
 </html>
