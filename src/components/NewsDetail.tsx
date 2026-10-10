@@ -76,7 +76,7 @@ export const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <header className="bg-[#192C56] text-white">
-        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center gap-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-3">
           <a href="/news" className="inline-flex items-center gap-1.5 text-xs font-bold hover:underline">
             <ArrowLeft size={14} /> {lang === "id" ? "Berita" : "News"}
           </a>
@@ -84,7 +84,7 @@ export const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
           <LanguageToggle />
         </div>
       </header>
-      <main className="max-w-3xl mx-auto px-4 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {!item && !missing && <p className="text-sm text-slate-500">Memuat…</p>}
         {missing && (
           <div>
@@ -96,7 +96,7 @@ export const NewsDetail: React.FC<{ slug: string }> = ({ slug }) => {
           </div>
         )}
         {item && (
-          <article>
+          <article className="max-w-3xl">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A] tracking-tight mb-3">{item.title}</h1>
             {item.publishedAt && (
               <p className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 mb-6">

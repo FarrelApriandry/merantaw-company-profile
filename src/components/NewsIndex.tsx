@@ -33,7 +33,7 @@ export const NewsIndex: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <header className="bg-[#192C56] text-white">
-        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-3">
           <a href="/" className="inline-flex items-center gap-1.5 text-xs font-bold hover:underline">
             <ArrowLeft size={14} /> Merantaw
           </a>
@@ -41,7 +41,7 @@ export const NewsIndex: React.FC = () => {
           <LanguageToggle />
         </div>
       </header>
-      <main className="max-w-5xl mx-auto px-4 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A] tracking-tight mb-8">{heading}</h1>
         {!items && <p className="text-sm text-slate-500">Memuat…</p>}
         {items && items.length === 0 && (
